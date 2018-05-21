@@ -35,7 +35,6 @@ ProductName=HPE Unified Functional Testing
 Version=14.02
 
 [TulipAddins]
-ActiveX=
 Database=
 File Content=
 Insight=
