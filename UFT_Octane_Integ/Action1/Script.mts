@@ -1,6 +1,8 @@
 ﻿'Date : 16.05.2018
 'Decription : Orange HRM Application test scenario
 
+
+Systemutil.CloseProcessByName "iexplore.exe"
 'Launch Application
 SystemUtil.Run "iexplore.exe", "http://127.0.0.1/orangehrm/symfony/web/index.php/auth/login"
 
@@ -141,15 +143,17 @@ Else
    Reporter.ReportEvent micFail,"Dialog Delete Button Click","Delete Button does not exist"
 End If
 
+Wait(5)
 'Verification
 
 Dim expRes, actRes
 
 expRes = "No Records Found"
 
-If Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebElement("innerhtml:=No Records Found").Exist Then
+If Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").WebElement("innertext:=No Records Found").Exist Then
 
-	actRes = Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebElement("innerhtml:=No Records Found").GetROProperty("innertext")
+
+	actRes = Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").WebElement("innertext:=No Records Found").GetROProperty("innertext")
 	
 	If Trim(actRes) = Trim(expRes) Then
 		
@@ -161,16 +165,16 @@ End If
 
 'Logout
 
-If Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("html id:=welcome").Exist Then
-   Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("html id:=welcome").Click
+If Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("html id:=welcome").Exist Then
+   Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("html id:=welcome").Click
    Reporter.ReportEvent micPass,"Welcome Link Click","Successfully Clicked"
  Else
    Reporter.ReportEvent micFail,"Welcome Link Click","Link does not exist"
    
 End If
 
-If Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("name:=Logout").Exist Then
-   Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("name:=Logout").Click
+If Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("name:=Logout").Exist Then
+   Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("name:=Logout").Click
    Reporter.ReportEvent micPass,"Logout Link Click","Successfully Clicked"
  Else
    Reporter.ReportEvent micFail,"Logout Link Click","Link does not exist"
@@ -179,7 +183,5 @@ End If
 
 'Close the browser
 
-Browser("opentitle:=OrangeHRM").Close
-
-
+Systemutil.CloseProcessByName "iexplore.exe"
 
