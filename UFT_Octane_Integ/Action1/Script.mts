@@ -6,7 +6,9 @@ Systemutil.CloseProcessByName "iexplore.exe"
 
 'Launch Application
 
-SystemUtil.Run "iexplore.exe", "http://127.0.0.1/orangehrm/symfony/web/index.php/auth/login"
+'SystemUtil.Run "iexplore.exe", "http://127.0.0.1/orangehrm/symfony/web/index.php/auth/login"
+
+SystemUtil.Run "iexplore.exe", "http://opensource.demo.orangehrmlive.com/index.php/auth/login"
 
 Do Until Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebButton("html id:=btnLogin").Exist(1)
 Loop
@@ -15,14 +17,14 @@ Loop
 'Login into Application
 
 If Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebEdit("html id:=txtUsername").Exist Then
-   Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebEdit("html id:=txtUsername").Set "sadmin123"
+   Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebEdit("html id:=txtUsername").Set "Admin"
    Reporter.ReportEvent micPass,"Username Set","Successfully Set" 
  Else
    Reporter.ReportEvent micFail,"Username Set","Username/Object does not exist"
 End If
 
 If Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebEdit("html id:=txtPassword").Exist Then
-   Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebEdit("html id:=txtPassword").SetSecure "5b005ccbe5c8a2f35ee86f922906d5709d536f1d67bc"' "admin123"
+   Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebEdit("html id:=txtPassword").SetSecure "5b051c35be3517e6cada111aa95cf7ba"'"5b005ccbe5c8a2f35ee86f922906d5709d536f1d67bc"' "admin123"
    Reporter.ReportEvent micPass,"Password Set","Successfully Set"
  Else
    Reporter.ReportEvent micFail,"Password Set","Password/Object does not exist"
@@ -154,10 +156,26 @@ expRes = "No Records Found"
 
 'For outside techm network
 
-If Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").WebElement("innertext:=No Records Found").Exist Then
+'If Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").WebElement("innertext:=No Records Found").Exist Then
+'
+'
+'	actRes = Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").WebElement("innertext:=No Records Found").GetROProperty("innertext")
+'	
+'	If Trim(actRes) = Trim(expRes) Then
+'		
+'		Reporter.ReportEvent micPass,"Verification","Successfully Verified  " & actRes
+'	Else
+'		Reporter.ReportEvent micFail,"Verification","Verification failed"
+'	End If
+'End If
+'
+
+'For outside techm network
 
 
-	actRes = Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").WebElement("innertext:=No Records Found").GetROProperty("innertext")
+	If Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebElement("innertext:=No Records Found").Exist Then
+
+	  actRes = Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebElement("innertext:=No Records Found").GetROProperty("innertext")
 	
 	If Trim(actRes) = Trim(expRes) Then
 		
@@ -167,60 +185,44 @@ If Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEm
 	End If
 End If
 
-
-'For outside techm network
-
-
-'	If Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebElement("innertext:=No Records Found").Exist Then
-'
-'	  actRes = Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").WebElement("innertext:=No Records Found").GetROProperty("innertext")
-'	
-'	If Trim(actRes) = Trim(expRes) Then
-'		
-'		Reporter.ReportEvent micPass,"Verification","Successfully Verified  " & actRes
-'	Else
-'		Reporter.ReportEvent micFail,"Verification","Verification failed"
-'	End If
-'End If
-
 'Logout
 
 'For outside techm network
 
-If Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("html id:=welcome").Exist Then
-   Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("html id:=welcome").Click
-   Reporter.ReportEvent micPass,"Welcome Link Click","Successfully Clicked"
- Else
-   Reporter.ReportEvent micFail,"Welcome Link Click","Link does not exist"
-   
-End If
-
-If Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("name:=Logout").Exist Then
-   Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("name:=Logout").Click
-   Reporter.ReportEvent micPass,"Logout Link Click","Successfully Clicked"
- Else
-   Reporter.ReportEvent micFail,"Logout Link Click","Link does not exist"
-   
-End If
-
-'For outside techm network
-
-
-'If Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("html id:=welcome").Exist Then
-'   Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("html id:=welcome").Click
+'If Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("html id:=welcome").Exist Then
+'   Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("html id:=welcome").Click
 '   Reporter.ReportEvent micPass,"Welcome Link Click","Successfully Clicked"
 ' Else
 '   Reporter.ReportEvent micFail,"Welcome Link Click","Link does not exist"
 '   
 'End If
 '
-'If Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("name:=Logout").Exist Then
-'   Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("name:=Logout").Click
+'If Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("name:=Logout").Exist Then
+'   Browser("openurl:=http://127.0.0.1/orangehrm/symfony/web/index.php/pim/viewEmployeeList").Page("title:=OrangeHRM").Link("name:=Logout").Click
 '   Reporter.ReportEvent micPass,"Logout Link Click","Successfully Clicked"
 ' Else
 '   Reporter.ReportEvent micFail,"Logout Link Click","Link does not exist"
 '   
 'End If
+
+'For outside techm network
+
+
+If Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("html id:=welcome").Exist Then
+   Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("html id:=welcome").Click
+   Reporter.ReportEvent micPass,"Welcome Link Click","Successfully Clicked"
+ Else
+   Reporter.ReportEvent micFail,"Welcome Link Click","Link does not exist"
+   
+End If
+
+If Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("name:=Logout").Exist Then
+   Browser("opentitle:=OrangeHRM").Page("title:=OrangeHRM").Link("name:=Logout").Click
+   Reporter.ReportEvent micPass,"Logout Link Click","Successfully Clicked"
+ Else
+   Reporter.ReportEvent micFail,"Logout Link Click","Link does not exist"
+   
+End If
 
 
 'Close the browser
